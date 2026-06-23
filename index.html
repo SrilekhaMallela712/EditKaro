@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Editkaro.in — We Cut. We Create. We Captivate.</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;--dark:#111111;--card:#141414;--border:#1e1e1e;
+  --violet:#8B5CF6;--magenta:#EC4899;--cyan:#06B6D4;
+  --white:#F8F8F8;--gray:#888;--gray-light:#bbb;
+  --grad:linear-gradient(135deg,#8B5CF6,#EC4899);
+  --grad-r:linear-gradient(135deg,#EC4899,#8B5CF6);
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden}
+
+/* NOISE */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(8,8,8,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);transition:padding .3s}
+nav.scrolled{padding:13px 48px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+.nav-links{display:flex;gap:34px;list-style:none}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:12.5px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--grad)!important;color:var(--white)!important;-webkit-text-fill-color:var(--white)!important;padding:8px 20px;border-radius:50px;font-weight:600!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all .3s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:130px 24px 90px;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 20% 50%,rgba(139,92,246,.13) 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 80% 30%,rgba(236,72,153,.10) 0%,transparent 70%),radial-gradient(ellipse 55% 40% at 60% 80%,rgba(6,182,212,.07) 0%,transparent 70%);animation:bgPulse 8s ease-in-out infinite alternate}
+@keyframes bgPulse{from{opacity:.7}to{opacity:1}}
+.hero-line{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(139,92,246,.18),transparent);pointer-events:none}
+.hero-line:nth-child(1){left:14%}.hero-line:nth-child(2){right:14%}
+
+.hero-eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--violet);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:26px;padding:7px 18px;border:1px solid rgba(139,92,246,.3);border-radius:50px;background:rgba(139,92,246,.06);animation:fadeInDown .8s ease .2s both}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--violet);animation:blink 1.5s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(58px,11vw,148px);line-height:.92;letter-spacing:-1px;margin-bottom:6px;animation:fadeInUp .9s ease .4s both}
+.line-grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.line-outline{display:block;-webkit-text-stroke:1.5px rgba(255,255,255,.13);color:transparent;font-size:.73em}
+
+.hero-sub{font-size:clamp(14px,1.8vw,17px);color:var(--gray-light);max-width:510px;line-height:1.75;margin:26px auto 42px;font-weight:300;animation:fadeInUp .9s ease .6s both}
+.hero-sub strong{color:var(--white);font-weight:600}
+
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fadeInUp .9s ease .8s both}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;border-radius:50px;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;border:none;transition:all .25s;letter-spacing:.2px;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 0 28px rgba(139,92,246,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 45px rgba(139,92,246,.5)}
+.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.2)}
+.btn-outline:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.4)}
+
+.hero-stats{display:flex;gap:44px;margin-top:68px;animation:fadeInUp .9s ease 1s both;flex-wrap:wrap;justify-content:center}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:38px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.stat-label{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--gray);font-size:10px;letter-spacing:2px;text-transform:uppercase;animation:fadeIn 1s ease 1.5s both}
+.scroll-hint::after{content:'';width:1px;height:36px;background:linear-gradient(to bottom,var(--gray),transparent);animation:scrollLine 1.5s ease infinite}
+@keyframes scrollLine{0%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1)}100%{opacity:0;transform:scaleY(1);transform-origin:bottom}}
+
+/* MARQUEE */
+.marquee-section{border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:16px 0;background:rgba(139,92,246,.03)}
+.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{display:inline-flex;align-items:center;gap:12px;padding:0 30px;font-size:11.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray);white-space:nowrap}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--violet)}
+
+/* SECTION COMMON */
+.section-header{text-align:center;padding:0 24px;margin-bottom:56px}
+.section-eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--magenta);margin-bottom:14px}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,6vw,68px);line-height:1;margin-bottom:14px}
+.section-desc{color:var(--gray);font-size:15px;max-width:450px;margin:0 auto;line-height:1.7}
+
+/* FILTER BAR */
+.portfolio-section{padding:90px 0 70px;position:relative;z-index:1}
+.filter-bar{display:flex;justify-content:center;padding:0 16px;margin-bottom:52px;position:sticky;top:66px;z-index:100}
+.filter-track{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;background:rgba(8,8,8,.92);backdrop-filter:blur(20px);padding:14px 20px;border-radius:50px;border:1px solid var(--border)}
+.filter-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:50px;font-size:12px;font-weight:600;letter-spacing:.3px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--gray);transition:all .22s;position:relative;overflow:hidden;white-space:nowrap;font-family:'Inter',sans-serif}
+.filter-btn::before{content:'';position:absolute;inset:0;background:var(--grad);opacity:0;transition:opacity .22s;border-radius:inherit}
+.filter-btn span,.filter-btn .fi{position:relative;z-index:1}
+.filter-btn:hover{color:var(--white);border-color:rgba(139,92,246,.35)}
+.filter-btn:hover::before{opacity:.14}
+.filter-btn.active{color:#fff;border-color:transparent;box-shadow:0 0 18px rgba(139,92,246,.28)}
+.filter-btn.active::before{opacity:1}
+
+/* VIDEO GRID */
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 3px;max-width:1500px;margin:0 auto}
+.video-card{position:relative;overflow:hidden;cursor:pointer;background:var(--card);aspect-ratio:16/10}
+.video-card.featured{grid-column:span 2;aspect-ratio:16/8}
+.video-card.tall{aspect-ratio:9/13}
+
+/* Thumbnail image */
+.card-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .65s cubic-bezier(.25,.46,.45,.94)}
+.video-card:hover .card-thumb{transform:scale(1.07)}
+
+/* Colour-grade shimmer overlay on hover */
+.card-grade{position:absolute;inset:0;opacity:0;transition:opacity .4s;mix-blend-mode:color}
+.video-card:hover .card-grade{opacity:.35}
+
+.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.22) 48%,transparent 100%);transition:opacity .3s;opacity:.55}
+.video-card:hover .card-overlay{opacity:1}
+
+/* Play button */
+.card-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.65);width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.1);backdrop-filter:blur(12px);border:2px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:all .32s cubic-bezier(.34,1.56,.64,1)}
+.card-play svg{width:20px;height:20px;fill:#fff;margin-left:4px}
+.video-card:hover .card-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.card-play::before{content:'';position:absolute;inset:-10px;border-radius:50%;background:var(--grad);z-index:-1;opacity:0;transition:opacity .3s;animation:ringPulse 1.4s ease infinite}
+.video-card:hover .card-play::before{opacity:.45}
+@keyframes ringPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+
+/* Duration badge */
+.card-duration{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);color:var(--white);font-size:11px;font-weight:700;padding:3px 9px;border-radius:4px;opacity:0;transition:opacity .3s;letter-spacing:.5px}
+.video-card:hover .card-duration{opacity:1}
+
+/* Card info */
+.card-info{position:absolute;bottom:0;left:0;right:0;padding:22px 20px 18px;transform:translateY(6px);transition:transform .3s ease}
+.video-card:hover .card-info{transform:translateY(0)}
+.card-category{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;border-radius:4px;margin-bottom:9px}
+.card-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(14px,1.8vw,19px);font-weight:700;line-height:1.25;margin-bottom:6px;color:#fff}
+.card-meta{font-size:11.5px;color:var(--gray-light);opacity:0;transition:opacity .3s .05s}
+.video-card:hover .card-meta{opacity:1}
+
+/* Category badge colours */
+.cat-short{background:rgba(139,92,246,.22);color:#c4b5fd}
+.cat-long{background:rgba(6,182,212,.18);color:#67e8f9}
+.cat-gaming{background:rgba(16,185,129,.18);color:#6ee7b7}
+.cat-football{background:rgba(245,158,11,.18);color:#fcd34d}
+.cat-ecommerce{background:rgba(236,72,153,.18);color:#f9a8d4}
+.cat-documentary{background:rgba(239,68,68,.18);color:#fca5a5}
+.cat-color{background:rgba(217,119,6,.18);color:#fde68a}
+.cat-anime{background:rgba(124,58,237,.22);color:#ddd6fe}
+.cat-ads{background:rgba(236,72,153,.22);color:#fbcfe8}
+
+/* Grade colors per category */
+.grade-short{background:#8B5CF6}
+.grade-long{background:#06B6D4}
+.grade-gaming{background:#10B981}
+.grade-football{background:#F59E0B}
+.grade-ecommerce{background:#EC4899}
+.grade-documentary{background:#EF4444}
+.grade-color{background:#D97706}
+.grade-anime{background:#7C3AED}
+.grade-ads{background:#EC4899}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .28s}
+.lightbox.open{opacity:1;pointer-events:all}
+.lb-bg{position:absolute;inset:0;background:rgba(0,0,0,.93);backdrop-filter:blur(18px)}
+.lb-wrap{position:relative;z-index:1;width:100%;max-width:920px;transform:scale(.88);transition:transform .36s cubic-bezier(.34,1.56,.64,1)}
+.lightbox.open .lb-wrap{transform:scale(1)}
+.lb-video{position:relative;padding-top:56.25%;background:#000;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.09)}
+.lb-video iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.lb-close{position:absolute;top:-46px;right:0;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;opacity:.65;transition:opacity .2s;line-height:1}
+.lb-close:hover{opacity:1}
+.lb-info{margin-top:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.lb-title{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700}
+.lb-tags{display:flex;gap:7px;flex-wrap:wrap}
+.lb-tag{font-size:11px;padding:3px 11px;border-radius:50px;border:1px solid rgba(255,255,255,.14);color:var(--gray-light)}
+
+/* SERVICES */
+.services-section{padding:70px 24px;max-width:1380px;margin:0 auto}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:52px}
+.service-item{background:var(--dark);padding:28px 22px;display:flex;flex-direction:column;gap:10px;transition:background .22s}
+.service-item:hover{background:#191919}
+.service-icon{font-size:26px}
+.service-name{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700}
+.service-desc{font-size:12px;color:var(--gray);line-height:1.65}
+
+/* PROCESS */
+.process-section{padding:70px 24px;max-width:960px;margin:0 auto}
+.process-steps{display:flex;flex-direction:column;margin-top:52px;position:relative}
+.process-steps::before{content:'';position:absolute;left:23px;top:24px;bottom:24px;width:1px;background:linear-gradient(to bottom,var(--violet),var(--magenta),transparent)}
+.process-step{display:flex;gap:28px;padding:24px 0;align-items:flex-start}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:13px;color:#000;background:var(--grad);width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:1px}
+.step-content h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin-bottom:7px}
+.step-content p{font-size:13.5px;color:var(--gray);line-height:1.7}
+
+/* TESTIMONIALS */
+.testimonials{padding:70px 24px;max-width:1200px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:52px}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:16px;transition:border-color .22s}
+.testi-card:hover{border-color:rgba(139,92,246,.3)}
+.testi-stars{color:#F59E0B;font-size:14px;letter-spacing:2px}
+.testi-quote{font-size:14px;color:var(--gray-light);line-height:1.75;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:12px;margin-top:auto}
+.testi-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(139,92,246,.3)}
+.testi-name{font-weight:700;font-size:14px}
+.testi-role{font-size:12px;color:var(--gray)}
+
+/* CTA */
+.cta-section{padding:70px 24px 110px;text-align:center;position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:280px;background:radial-gradient(ellipse,rgba(139,92,246,.18) 0%,transparent 70%);pointer-events:none}
+.cta-box{max-width:680px;margin:0 auto;position:relative;z-index:1;border:1px solid rgba(139,92,246,.22);border-radius:22px;padding:60px 44px;background:linear-gradient(135deg,rgba(139,92,246,.06),rgba(236,72,153,.04));backdrop-filter:blur(10px)}
+.cta-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,7vw,78px);line-height:1;margin-bottom:14px}
+.cta-sub{color:var(--gray-light);font-size:15px;margin-bottom:34px;line-height:1.7}
+.trust-row{margin-top:28px;display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+.trust-item{font-size:13px;color:var(--gray);display:flex;align-items:center;gap:7px}
+.trust-check{color:var(--violet)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-copy{font-size:13px;color:var(--gray)}
+.footer-links{display:flex;gap:22px}
+.footer-links a{color:var(--gray);text-decoration:none;font-size:13px;transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+
+/* ANIMATIONS */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.video-card{opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+.video-card.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:15px 22px}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;inset:0;top:58px;background:rgba(8,8,8,.97);align-items:center;justify-content:center;gap:28px;z-index:99}
+  .nav-links.open a{font-size:22px}
+  .hamburger{display:flex}
+  .video-grid{grid-template-columns:repeat(2,1fr)}
+  .video-card.featured{grid-column:span 2}
+  footer{padding:28px 22px}
+  .cta-box{padding:38px 22px}
+}
+@media(max-width:560px){
+  .video-grid{grid-template-columns:1fr}
+  .video-card.featured{grid-column:span 1;aspect-ratio:16/10}
+  .filter-track{border-radius:16px;gap:6px}
+  .filter-btn{padding:6px 10px;font-size:11px}
+  .hero-stats{gap:18px}
+  .stat-num{font-size:30px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="logo">Editkaro<span style="font-family:'Bebas Neue';color:var(--white);background:none;-webkit-text-fill-color:var(--white)">.in</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-line"></div>
+
+  <div class="hero-eyebrow">India's Premier Video Editing Studio</div>
+  <h1 class="hero-title">
+    <span class="line-grad">We Cut.</span>
+    <span class="line-outline">We Create.</span>
+    <span class="line-grad">We Captivate.</span>
+  </h1>
+  <p class="hero-sub">From <strong>viral reels</strong> to <strong>cinematic documentaries</strong> — Editkaro.in transforms raw footage into stories that stop the scroll and move audiences.</p>
+
+  <div class="hero-actions">
+    <a href="#portfolio" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      View Our Work
+    </a>
+    <a href="#contact" class="btn btn-outline">Start a Project →</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Videos Delivered</span></div>
+    <div class="stat"><span class="stat-num">9</span><span class="stat-label">Edit Styles</span></div>
+    <div class="stat"><span class="stat-num">48h</span><span class="stat-label">Avg Turnaround</span></div>
+    <div class="stat"><span class="stat-num">98%</span><span class="stat-label">Client Retention</span></div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- PORTFOLIO -->
+<section class="portfolio-section" id="portfolio">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">Our Portfolio</span>
+    <h2 class="section-title">Frames That Hit Different</h2>
+    <p class="section-desc">Real projects. Real results. Filter by category or explore everything.</p>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-track">
+      <button class="filter-btn active" data-filter="all" onclick="filterCards('all',this)"><span class="fi">✦</span><span>All</span></button>
+      <button class="filter-btn" data-filter="short"       onclick="filterCards('short',this)"><span class="fi">⚡</span><span>Short-Form</span></button>
+      <button class="filter-btn" data-filter="long"        onclick="filterCards('long',this)"><span class="fi">🎬</span><span>Long-Form</span></button>
+      <button class="filter-btn" data-filter="gaming"      onclick="filterCards('gaming',this)"><span class="fi">🎮</span><span>Gaming</span></button>
+      <button class="filter-btn" data-filter="football"    onclick="filterCards('football',this)"><span class="fi">⚽</span><span>Football</span></button>
+      <button class="filter-btn" data-filter="ecommerce"   onclick="filterCards('ecommerce',this)"><span class="fi">🛒</span><span>eCommerce</span></button>
+      <button class="filter-btn" data-filter="documentary" onclick="filterCards('documentary',this)"><span class="fi">🎥</span><span>Documentary</span></button>
+      <button class="filter-btn" data-filter="color"       onclick="filterCards('color',this)"><span class="fi">🎨</span><span>Color Grade</span></button>
+      <button class="filter-btn" data-filter="anime"       onclick="filterCards('anime',this)"><span class="fi">🌸</span><span>Anime</span></button>
+      <button class="filter-btn" data-filter="ads"         onclick="filterCards('ads',this)"><span class="fi">📢</span><span>Ads</span></button>
+    </div>
+  </div>
+
+  <div class="video-grid" id="videoGrid"></div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">What We Do</span>
+    <h2 class="section-title">Every Frame, Every Style</h2>
+    <p class="section-desc">A full-stack creative studio covering every video format your brand needs.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-item"><span class="service-icon">⚡</span><div class="service-name">Short-Form Videos</div><div class="service-desc">Reels, Shorts & TikToks engineered to go viral — punchy edits, trending sounds, perfect pacing.</div></div>
+    <div class="service-item"><span class="service-icon">🎬</span><div class="service-name">Long-Form Content</div><div class="service-desc">YouTube videos, vlogs & deep-dives with clean cuts, motion graphics, and tight storytelling.</div></div>
+    <div class="service-item"><span class="service-icon">🎮</span><div class="service-name">Gaming Videos</div><div class="service-desc">Highlight reels, montages, and stream recordings edited with energy-matched cuts & overlays.</div></div>
+    <div class="service-item"><span class="service-icon">⚽</span><div class="service-name">Football Edits</div><div class="service-desc">Cinematic match highlights, player edits, and tactical breakdowns — the beautiful game, beautifully cut.</div></div>
+    <div class="service-item"><span class="service-icon">🛒</span><div class="service-name">eCommerce Ads</div><div class="service-desc">High-converting product videos with UGC-style authenticity or polished ad-creative production.</div></div>
+    <div class="service-item"><span class="service-icon">🎥</span><div class="service-name">Documentary Style</div><div class="service-desc">Brand stories, mini-docs, and interview-driven narratives that build deep emotional connection.</div></div>
+    <div class="service-item"><span class="service-icon">🎨</span><div class="service-name">Color Grading</div><div class="service-desc">Professional LUT-matched grading and color science that sets the mood and defines visual identity.</div></div>
+    <div class="service-item"><span class="service-icon">🌸</span><div class="service-name">Anime Videos</div><div class="service-desc">AMVs, anime-inspired edits, motion graphic sequences with the rhythm and energy of the genre.</div></div>
+    <div class="service-item"><span class="service-icon">📢</span><div class="service-name">Performance Ads</div><div class="service-desc">Meta, YouTube & social ads optimized for CTR with scroll-stopping hooks and clear CTAs.</div></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">How We Work</span>
+    <h2 class="section-title">Our Process</h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal"><div class="step-num">01</div><div class="step-content"><h3>Brief & Discovery</h3><p>You share your footage, references, and vision. We ask the right questions to understand your brand voice and the video's job.</p></div></div>
+    <div class="process-step reveal"><div class="step-num">02</div><div class="step-content"><h3>Edit & Craft</h3><p>Our editors cut, grade, sync audio, and add motion graphics. We obsess over every frame so you don't have to.</p></div></div>
+    <div class="process-step reveal"><div class="step-num">03</div><div class="step-content"><h3>Review & Revise</h3><p>Draft within 48 hours. Share feedback — we refine until it's perfect. No surprise charges for revisions.</p></div></div>
+    <div class="process-step reveal"><div class="step-num">04</div><div class="step-content"><h3>Deliver & Publish</h3><p>Export in your platform's optimal specs. Hand over files ready to post — or we upload directly for you.</p></div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">Client Love</span>
+    <h2 class="section-title">What They Say</h2>
+  </div>
+  <div class="testi-grid reveal">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"Editkaro turned our raw clips into a viral reel that hit 2M views in 3 days. Insane quality, lightning turnaround."</div>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Arjun"/>
+        <div><div class="testi-name">Arjun Mehta</div><div class="testi-role">Fashion Brand Owner</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"The football edit they made for our channel hit 500K+ views. Their beat sync and colour grade is absolutely elite."</div>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" alt="Rahul"/>
+        <div><div class="testi-name">Rahul Verma</div><div class="testi-role">Sports YouTube Channel</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"Our eCommerce ad ROAS went 3x after switching to Editkaro. They understand hooks, storytelling, and conversion."</div>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Priya"/>
+        <div><div class="testi-name">Priya Sharma</div><div class="testi-role">D2C Skincare Brand</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"Best gaming editor I've worked with. They captured the intensity of my Valorant clips perfectly. Subscribers loved it!"</div>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" alt="Karan"/>
+        <div><div class="testi-name">Karan Bhatia</div><div class="testi-role">Gaming Streamer, 200K subs</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-glow"></div>
+  <div class="cta-box reveal">
+    <div class="section-eyebrow" style="display:block;margin-bottom:14px">Ready to Create?</div>
+    <h2 class="cta-title">Let's Make Something <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Unmissable</span></h2>
+    <p class="cta-sub">Drop us your idea — or just your raw footage — and we'll take it from there. First consultation is always free.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="mailto:hello@editkaro.in" class="btn btn-primary" style="font-size:15px;padding:15px 34px">Start a Project →</a>
+      <a href="#portfolio" class="btn btn-outline" style="font-size:15px;padding:15px 34px">View More Work</a>
+    </div>
+    <div class="trust-row">
+      <span class="trust-item"><span class="trust-check">✓</span> 48-hour first draft</span>
+      <span class="trust-item"><span class="trust-check">✓</span> Unlimited revisions</span>
+      <span class="trust-item"><span class="trust-check">✓</span> NDA on request</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Editkaro.in</div>
+  <div class="footer-copy">© 2025 Editkaro.in · Crafted with ❤️ in India</div>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">YouTube</a>
+    <a href="#">LinkedIn</a>
+    <a href="mailto:hello@editkaro.in">Email</a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-bg" onclick="closeLightbox()"></div>
+  <div class="lb-wrap">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <div class="lb-video" id="lbVideo"></div>
+    <div class="lb-info">
+      <div class="lb-title" id="lbTitle"></div>
+      <div class="lb-tags" id="lbTags"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── VIDEO DATA ───────────────────────────────────────────────────────────────
+// Each card has:
+//  thumb  → Unsplash image (free, no auth)
+//  ytId   → YouTube video ID for lightbox embed
+//  cat, title, client, tags, duration, featured
+const VIDEOS = [
+  {
+    id:1, cat:'short', featured:true,
+    title:'Viral Reel Compilation — Brand Growth',
+    client:'Social Media Brand', tags:['Reels','Trending','Motion'], duration:'1:02',
+    thumb:'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&h=560&fit=crop',
+    ytId:'5O0YDHiosD0'
+  },
+  {
+    id:2, cat:'football',
+    title:'Football Edits — Goals, Skills & Fails',
+    client:'Sports Channel', tags:['Highlights','Beat Sync','Cinematic'], duration:'3:18',
+    thumb:'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=700&h=440&fit=crop',
+    ytId:'0l8rqaNG9ZM'
+  },
+  {
+    id:3, cat:'gaming',
+    title:'Valorant Ranked Montage Edit',
+    client:'GamingPro YT', tags:['FPS','Montage','Beat Sync'], duration:'3:55',
+    thumb:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=700&h=440&fit=crop',
+    ytId:'hvv5DF2STSE'
+  },
+  {
+    id:4, cat:'ecommerce',
+    title:'Skincare Launch Ad — Before & After',
+    client:'Beauty D2C Brand', tags:['Product','UGC','Meta Ad'], duration:'0:30',
+    thumb:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=700&h=440&fit=crop',
+    ytId:'dQw4w9WgXcQ'
+  },
+  {
+    id:5, cat:'anime',
+    title:'Attack on Titan AMV — Legacy',
+    client:'AMV Creator', tags:['AMV','Intense','Beat Sync'], duration:'2:50',
+    thumb:'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=700&h=440&fit=crop',
+    ytId:'6JYIGclVQdw'
+  },
+  {
+    id:6, cat:'documentary', featured:true,
+    title:'Street Food India — Episode 1',
+    client:'Food Network YT', tags:['Mini-Doc','Travel','Food'], duration:'7:12',
+    thumb:'https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=900&h=500&fit=crop',
+    ytId:'BgyemKJViB4'
+  },
+  {
+    id:7, cat:'color',
+    title:'Teal & Orange Cinematic Grade Reel',
+    client:'Filmmaker Portfolio', tags:['Color Science','LUTs','Film Emulation'], duration:'1:08',
+    thumb:'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=700&h=440&fit=crop',
+    ytId:'T8yhr3LwN3M'
+  },
+  {
+    id:8, cat:'long',
+    title:'30-Day Fitness Transformation — Full Vlog',
+    client:'Health Creator', tags:['YouTube','Vlog','Transformation'], duration:'18:45',
+    thumb:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=700&h=440&fit=crop',
+    ytId:'5jlI4uzZGjU'
+  },
+  {
+    id:9, cat:'ads',
+    title:'Real Estate Luxury Villa Tour Ad',
+    client:'Property Firm', tags:['Drone','Luxury','YouTube Ad'], duration:'1:00',
+    thumb:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&h=440&fit=crop',
+    ytId:'XhKiYXSwuWE'
+  },
+  {
+    id:10, cat:'short',
+    title:'Day in My Life — Tokyo Travel Reel',
+    client:'Travel Creator', tags:['Vlog','Transitions','Trending'], duration:'0:55',
+    thumb:'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=700&h=440&fit=crop',
+    ytId:'BuCt1JqlfmA'
+  },
+  {
+    id:11, cat:'football',
+    title:'Best Football TikTok Compilation #287',
+    client:'Fan Page Network', tags:['Compilation','Skills','Fails'], duration:'5:22',
+    thumb:'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=700&h=440&fit=crop',
+    ytId:'UBafzj4MmhA'
+  },
+  {
+    id:12, cat:'gaming',
+    title:'Gaming Setup Tour + Montage Intro',
+    client:'Tech Gaming Creator', tags:['Setup','Aesthetic','Cinematic'], duration:'2:18',
+    thumb:'https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=700&h=440&fit=crop',
+    ytId:'IXYO9zhVmwM'
+  },
+  {
+    id:13, cat:'ecommerce',
+    title:'Fashion Drop — Product Showcase Edit',
+    client:'Streetwear Brand', tags:['Fashion','Aesthetic','Ad'], duration:'0:45',
+    thumb:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=440&fit=crop',
+    ytId:'dQw4w9WgXcQ'
+  },
+  {
+    id:14, cat:'anime',
+    title:'Naruto AMV — Born to Run',
+    client:'Anime AMV Channel', tags:['Shonen','Epic','AMV'], duration:'3:40',
+    thumb:'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=700&h=440&fit=crop',
+    ytId:'6JYIGclVQdw'
+  },
+  {
+    id:15, cat:'color',
+    title:'Wedding Golden Hour — Color Grade',
+    client:'Wedding Studio', tags:['Film Emulation','Warm Tone','Grade'], duration:'0:48',
+    thumb:'https://images.unsplash.com/photo-1519741497674-611481863552?w=700&h=440&fit=crop',
+    ytId:'T8yhr3LwN3M'
+  },
+  {
+    id:16, cat:'long',
+    title:'Ultimate YouTube Growth Guide 2025',
+    client:'Digital Marketing Creator', tags:['Tutorial','YouTube','Education'], duration:'22:10',
+    thumb:'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=700&h=440&fit=crop',
+    ytId:'5jlI4uzZGjU'
+  },
+  {
+    id:17, cat:'ads',
+    title:'3-Second Hook Ad — D2C Product',
+    client:'D2C Tech Brand', tags:['Meta Ad','Hook','CTA'], duration:'0:15',
+    thumb:'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=700&h=440&fit=crop',
+    ytId:'5O0YDHiosD0'
+  },
+  {
+    id:18, cat:'documentary',
+    title:'Startup Story — 5 Years in India',
+    client:'Tech Startup', tags:['Brand Film','Interview','Inspiring'], duration:'8:30',
+    thumb:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&h=440&fit=crop',
+    ytId:'BgyemKJViB4'
+  },
+];
+
+const CATS = {
+  short:       {label:'Short-Form',   cls:'cat-short',       grade:'grade-short'},
+  long:        {label:'Long-Form',    cls:'cat-long',        grade:'grade-long'},
+  gaming:      {label:'Gaming',       cls:'cat-gaming',      grade:'grade-gaming'},
+  football:    {label:'Football Edit',cls:'cat-football',    grade:'grade-football'},
+  ecommerce:   {label:'eCommerce Ad', cls:'cat-ecommerce',   grade:'grade-ecommerce'},
+  documentary: {label:'Documentary',  cls:'cat-documentary', grade:'grade-documentary'},
+  color:       {label:'Color Grading',cls:'cat-color',       grade:'grade-color'},
+  anime:       {label:'Anime Edit',   cls:'cat-anime',       grade:'grade-anime'},
+  ads:         {label:'Ads',          cls:'cat-ads',         grade:'grade-ads'},
+};
+
+// ─── MARQUEE ──────────────────────────────────────────────────────────────────
+const ITEMS=['Short-Form Videos','Long-Form Content','Gaming Edits','Football Highlights','eCommerce Ads','Documentary Style','Color Grading','Anime AMVs','Performance Ads','Motion Graphics','Beat Sync Edits','Brand Films'];
+const track=document.getElementById('marqueeTrack');
+[...ITEMS,...ITEMS].forEach(t=>{
+  const el=document.createElement('span');
+  el.className='marquee-item';
+  el.innerHTML=`<span>${t}</span><span class="marquee-dot"></span>`;
+  track.appendChild(el);
+});
+
+// ─── RENDER CARDS ─────────────────────────────────────────────────────────────
+function renderCards(filter='all'){
+  const grid=document.getElementById('videoGrid');
+  grid.innerHTML='';
+  const list=filter==='all'?VIDEOS:VIDEOS.filter(v=>v.cat===filter);
+  list.forEach((v,i)=>{
+    const c=CATS[v.cat];
+    const card=document.createElement('div');
+    card.className=`video-card${v.featured?' featured':''}`;
+    card.style.transitionDelay=`${i*45}ms`;
+    card.innerHTML=`
+      <img class="card-thumb" src="${v.thumb}" alt="${v.title}" loading="lazy"/>
+      <div class="card-grade ${c.grade}"></div>
+      <div class="card-overlay"></div>
+      <div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="card-duration">${v.duration}</div>
+      <div class="card-info">
+        <span class="card-category ${c.cls}">${c.label}</span>
+        <div class="card-title">${v.title}</div>
+        <div class="card-meta">${v.client}</div>
+      </div>
+    `;
+    card.addEventListener('click',()=>openLightbox(v));
+    grid.appendChild(card);
+    requestAnimationFrame(()=>setTimeout(()=>card.classList.add('visible'),i*55));
+  });
+}
+
+// ─── FILTER ───────────────────────────────────────────────────────────────────
+function filterCards(f,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards(f);
+}
+
+// ─── LIGHTBOX ─────────────────────────────────────────────────────────────────
+function openLightbox(v){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lbTitle').textContent=v.title;
+  document.getElementById('lbTags').innerHTML=v.tags.map(t=>`<span class="lb-tag">${t}</span>`).join('');
+  // Embed YouTube with autoplay
+  document.getElementById('lbVideo').innerHTML=
+    `<iframe src="https://www.youtube.com/embed/${v.ytId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  lb.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lbVideo').innerHTML=''; // stop video
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+
+// ─── NAV SCROLL ───────────────────────────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',scrollY>55);
+});
+
+// ─── MOBILE MENU ──────────────────────────────────────────────────────────────
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('open')}
+
+// ─── REVEAL ───────────────────────────────────────────────────────────────────
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.08,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderCards();
+</script>
+</body>
+</html>
